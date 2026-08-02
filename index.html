@@ -152,7 +152,7 @@
 
   <script>
     // CONFIGURAÇÕES DA API
-    const API_KEY = 'SUA_CHAVE_API_AQUI'; // <--- Cole sua API Key do TMDB aqui!
+    const API_KEY = '20da0f8c46c2244bc11df0aa99f768cb'; // <--- Cole sua API Key do TMDB aqui!
     const BASE_URL = 'https://api.themoviedb.org/3';
     const IMAGE_BASE_URL = 'https://image.tmdb.org/t500';
 
@@ -183,37 +183,38 @@
 
     // RENDERIZAR FILMES NA TELA
     function renderMovies(movies) {
-      moviesGrid.innerHTML = ''; // Limpa a mensagem de carregamento
+        moviesGrid.innerHTML = '';
 
-      movies.forEach(movie => {
-        const posterPath = movie.poster_path 
-          ? `${IMAGE_BASE_URL}${movie.poster_path}` 
-          : 'https://via.placeholder.com/500x750?text=Sem+Imagem';
+        movies.forEach(movie => {
+            // Garante que o link da imagem fique correto ou use uma imagem padrão
+            const posterPath = movie.poster_path 
+            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+            : 'https://placehold.co/500x750/1f1f1f/ffffff?text=Sem+Imagem';
 
-        const releaseYear = movie.release_date 
-          ? movie.release_date.split('-')[0] 
-          : 'N/A';
+            const releaseYear = movie.release_date 
+            ? movie.release_date.split('-')[0] 
+            : 'N/A';
 
-        const rating = movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A';
+            const rating = movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A';
 
-        const movieCard = document.createElement('div');
-        movieCard.classList.add('movie-card');
+            const movieCard = document.createElement('div');
+            movieCard.classList.add('movie-card');
 
-        movieCard.innerHTML = `
-          <div class="poster-container">
-            <img src="${posterPath}" alt="${movie.title}" loading="lazy">
-          </div>
-          <div class="movie-info">
-            <h3 class="movie-title">${movie.title}</h3>
-            <div class="movie-details">
-              <span>${releaseYear}</span>
-              <span class="rating">★ ${rating}</span>
+            movieCard.innerHTML = `
+            <div class="poster-container">
+                <img src="${posterPath}" alt="${movie.title}" loading="lazy">
             </div>
-          </div>
-        `;
+            <div class="movie-info">
+                <h3 class="movie-title">${movie.title}</h3>
+                <div class="movie-details">
+                <span>${releaseYear}</span>
+                <span class="rating">★ ${rating}</span>
+                </div>
+            </div>
+            `;
 
-        moviesGrid.appendChild(movieCard);
-      });
+            moviesGrid.appendChild(movieCard);
+        });
     }
 
     // INICIAR A BUSCA
